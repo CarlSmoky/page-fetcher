@@ -4,13 +4,13 @@
  * Connect to example.edu website's HTTP server using our TCP library
  * HTTP servers typically run on port 80
  */
- const args = process.argv.slice(2);
- const url = args[0];
- const file = args[1];
- console.log(url, file);
+const args = process.argv.slice(2);
+const url = args[0];
+const file = args[1];
+console.log(url);
 const net = require('net');
 const conn = net.createConnection({
-  host: 'example.edu',
+  host: url,
   port: 80
 });
 conn.setEncoding('UTF8');
@@ -30,18 +30,28 @@ conn.on('connect', () => {
  */
 conn.on('data', (data) => {
   writeFile(data);
+  const size = countLtter(data);
+  console.log(`Downloaded and saved ${size} to file`);
   conn.end();
+
+
 });
 
 const fs = require('fs')
 
 
 const writeFile = (data) => {
-  fs.writeFile('./text.html', data, err => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  //file written successfully
-});
+  fs.writeFile(file, data, err => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    //file written successfully
+  });
 };
+
+const countLtter = (data) => {
+  return data.length;
+};
+
+
