@@ -35,7 +35,7 @@ conn.on('connect', () => {
   console.log(`Connected to server!`);
 
   conn.write(`GET / HTTP/1.1\r\n`);
-  conn.write(`Host: example.edu\r\n`);
+  conn.write(`Host: ${cleanedUrl}\r\n`);
   conn.write(`\r\n`);
 });
 
