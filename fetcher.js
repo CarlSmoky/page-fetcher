@@ -22,8 +22,8 @@ const cleanUrl = (url) => {
   }
   return result;
 };
-
 const cleanedUrl = cleanUrl(url);
+
 const net = require('net');
 const conn = net.createConnection({
   host: cleanedUrl,
@@ -54,8 +54,6 @@ conn.on('data', (data) => {
 });
 
 const fs = require('fs')
-
-
 const writeFile = (data) => {
   fs.writeFile(file, data, err => {
     if (err) {
