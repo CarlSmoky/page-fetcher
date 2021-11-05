@@ -4,13 +4,29 @@
  * Connect to example.edu website's HTTP server using our TCP library
  * HTTP servers typically run on port 80
  */
-const args = process.argv.slice(2);
-const url = args[0];
-const file = args[1];
-console.log(url);
+const url = process.argv[2];
+const file = process.argv[3];
+
+//helper
+const cleanUrl = (url) => {
+  const urlSplit = url.split('//');
+  let result = urlSplit[0];
+  if (urlSplit.length > 1) {
+    result = urlSplit[1];
+  }
+  if (result.slice(result.length - 1) === '/') {
+    result = result.substring(0, result.length - 1);
+  }
+  if (result.slice(0, 4) === 'www.') {
+    result = result.slice(4);
+  }
+  return result;
+};
+
+const cleanedUrl = cleanUrl(url);
 const net = require('net');
 const conn = net.createConnection({
-  host: url,
+  host: cleanedUrl,
   port: 80
 });
 conn.setEncoding('UTF8');
